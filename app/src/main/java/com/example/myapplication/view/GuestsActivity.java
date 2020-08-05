@@ -28,6 +28,18 @@ public class GuestsActivity extends AppCompatActivity implements View.OnClickLis
 
         this.mViewHolder.checkBox = findViewById(R.id.checkbox);
         this.mViewHolder.checkBox.setOnClickListener(this);
+
+        this.loadData();
+    }
+
+    private void loadData() {
+        Bundle extras = getIntent().getExtras();
+        String presence = extras.getString(Constants.PRESENCE_KEY);
+        if (presence != null && presence.equals(Constants.CONFIRMATION_YES)){
+            this.mViewHolder.checkBox.setChecked(true);
+        } else {
+            this.mViewHolder.checkBox.setChecked(false);
+        }
     }
 
     @Override
@@ -37,7 +49,7 @@ public class GuestsActivity extends AppCompatActivity implements View.OnClickLis
                 //Salvar Participação
                 this.mSecurityPreferences.storeString(Constants.PRESENCE_KEY, Constants.CONFIRMATION_YES);
             } else{
-                //Salvar Participação
+                //Salvar ausência
                 this.mSecurityPreferences.storeString(Constants.PRESENCE_KEY, Constants.CONFIRMATION_NO);
             }
         }
